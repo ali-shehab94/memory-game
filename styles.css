@@ -1,6 +1,11 @@
 
 /* font color: #F8EFBA   green: #42720D   red: #E54D08   yellow: #FAF11B blue: #3156E2 */
 
+@font-face {
+    font-family: "pixels";
+    src: url(fonts/PublicPixel-0W5Kv.ttf) format("truetype");
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -19,7 +24,7 @@ body {
 }
 
 .display-msg > h1 {
-    font-family: Helvetica, sans-serif;
+    font-family: "pixels", Arial, Helvetica, sans-serif;
     font-size: 4rem;
     color: white;
     margin-top: 4%;
@@ -38,7 +43,7 @@ body {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 30%;
+    width: 27%;
 
 
 }
