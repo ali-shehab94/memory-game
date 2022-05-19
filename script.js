@@ -13,22 +13,20 @@ wrongSound = new Audio('sounds/wrong.mp3');
 
 let randNumber
 let numberArray = []
-let level = 0
-
-
+let level = 1
+let wrapper = document.getElementById("game-wrapper")
 let displayText = document.getElementById("display-msg")
 
+
+
 for (let i = 0; i < 15; i++){
-    level += 1;
-    level.innerText = "Level $`level`"
+        
     randNumber = (Math.floor(Math.random() * 4))
-    if (randNumber == 0){
-        green.getElementById("green").click();
-    }else if (randNumber == 1){
-        green.getElementById("red").click()
-    }
-    
-    numberArray.push(randNumber)
+}
+numberArray.push(randNumber)
+
+function gameStart(){
+        document.getElementById("display-msg").innerText = "Level " + level
         let green = document.getElementById("green");
         green.onclick = function(){
             greenSound.play()
@@ -56,18 +54,26 @@ for (let i = 0; i < 15; i++){
             userInput.push("3")
             
         }
+}
+
+
+
+
+
+
+
+
+    // if (randNumber == 0){
+    //     green.getElementById("green").click();
+    // }else if (randNumber == 1){
+    //     green.getElementById("red").click()
+    // }
+    
+    
 
 console.log(numberArray)
 
-window.addEventListener('keydown', function() {
-    let object = document.getElementById("green");
-    object.style.color = "white";
 
-})
-
-
-
-}
 
 console.log("asij")
 console.log(userInput)
