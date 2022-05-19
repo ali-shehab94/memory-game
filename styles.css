@@ -41,7 +41,7 @@ body {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     width: 27%;
 
@@ -89,4 +89,8 @@ body {
 .green:hover, .red:hover, .yellow:hover, .blue:hover {
     cursor: pointer;
     border: 10px solid white;
+}
+
+.green:active, .red:active, .yellow:active, .blue:active {
+    background-color: rgb(187, 187, 187);
 }
