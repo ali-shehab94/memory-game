@@ -91,6 +91,4 @@ body {
     border: 10px solid white;
 }
 
-.green:active, .red:active, .yellow:active, .blue:active {
-    background-color: rgb(187, 187, 187);
-}
+
