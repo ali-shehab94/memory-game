@@ -11,19 +11,20 @@ yellowSound = new Audio('sounds/yellow.mp3');
 blueSound = new Audio('sounds/blue.mp3');
 wrongSound = new Audio('sounds/wrong.mp3');
 
-let playing = false;
 let btnSound;
 let btnColor;
 let randNumber;
 let numberArray = [];
 let level = 1;
-let wrapper = document.getElementById("game-wrapper");
+let wrapper = document.getElementById("body");
 let displayText = document.getElementById("display-msg");
 
 let green = document.getElementById("green")
 let red = document.getElementById("red");
 let yellow = document.getElementById("yellow");
 let blue = document.getElementById("blue");
+
+
 
 function generateColor() {
     randNumber = (Math.floor(Math.random() * 4))
@@ -45,16 +46,34 @@ function revertColor(button) {
 }
 
 function promptUser(button){
-    activateButton(button);
     userInput.push(String(button))
-    if (numberArray.at(-1) == userInput.at(-1)) {
-        level += 1
-        setTimeout(gameStart, 1000);
-        console.log(userInput)
-    }else {
-        console.log("You Lose");
-        console.log(numberArray, userInput)
+    activateButton(String(button));
+    for (let i = 0; i < userInput.length; i++) {
+            if (userInput[i] != numberArray[i]){
+                gameOver()
+            }
+    }if (userInput.length == numberArray.length) {
+        userInput = []
+        level += 1;
+        displayText.innerText = "Level " + level;
+        setTimeout(function (){
+            activateButton(randomPattern())
+        }, 1000);
     }
+    // if (userInput.length == numberArray.length) {
+    //     for (let i = 0; i < numberArray.length; i++) {
+    //         if (numberArray == userInput) {
+    //             level += 1
+    //             displayText.innerText = "Level " + level;
+    //             setTimeout(function (){
+    //                 activateButton(randomPattern())
+    //             }, 1000);
+    //             console.log(userInput)
+    //         }else {
+    //             console.log("You Lose");
+    //             console.log(numberArray, userInput)
+    //         }
+    // }
 }
 
 function activateButton(color) {
@@ -92,14 +111,15 @@ function gameStart() {
         red.addEventListener("click", function(){promptUser('red')});
         yellow.addEventListener("click", function(){promptUser('yellow')});
         blue.addEventListener("click", function(){promptUser('blue')});
-        
 }
 
 
 
-
-
-
+function gameOver(){
+    wrapper.style.backgroundColor = "red"
+    wrongSound.play()
+    displayText.innerText = "Game Over! You Lost ¯\_( ͡❛ ͜ʖ ͡❛)_/¯! Press Any Key To Play Again"
+}
 
     //     
 
