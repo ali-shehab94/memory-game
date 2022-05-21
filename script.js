@@ -11,6 +11,7 @@ yellowSound = new Audio('sounds/yellow.mp3');
 blueSound = new Audio('sounds/blue.mp3');
 wrongSound = new Audio('sounds/wrong.mp3');
 
+let endGame = false;
 let btnSound;
 let btnColor;
 let randNumber;
@@ -24,7 +25,7 @@ let red = document.getElementById("red");
 let yellow = document.getElementById("yellow");
 let blue = document.getElementById("blue");
 
-body.addEventListener("keydown", function() {gameStart()}, {once : true});
+body.addEventListener("keydown", function() {gameStart()});
 
 function generateColor() {
     randNumber = (Math.floor(Math.random() * 4))
@@ -52,30 +53,18 @@ function promptUser(button){
     for (let i = 0; i < userInput.length; i++) {
             if (userInput[i] != numberArray[i]){
                 gameOver();
-                break;
+                userInput = []
             }
-    }if (userInput.length == numberArray.length) {
-        userInput = []
-        level += 1;
-        displayText.innerText = "Level " + level;
-        setTimeout(function (){
-            activateButton(randomPattern())
-        }, 1000);
+    }if (endGame == false) {
+        if (userInput.length == numberArray.length) {
+            userInput = []
+            level += 1;
+            displayText.innerText = "Level " + level;
+            setTimeout(function (){
+                activateButton(randomPattern())
+            }, 1000);
+        }
     }
-    // if (userInput.length == numberArray.length) {
-    //     for (let i = 0; i < numberArray.length; i++) {
-    //         if (numberArray == userInput) {
-    //             level += 1
-    //             displayText.innerText = "Level " + level;
-    //             setTimeout(function (){
-    //                 activateButton(randomPattern())
-    //             }, 1000);
-    //             console.log(userInput)
-    //         }else {
-    //             console.log("You Lose");
-    //             console.log(numberArray, userInput)
-    //         }
-    // }
 }
 
 function activateButton(color) {
@@ -116,23 +105,28 @@ function gameStart() {
         blue.addEventListener("click", function(){promptUser('blue')});
 }
 
-function gameStart2() {
-    body.style.background = null;
-    displayText.innerText = "Level " + level;
-    setTimeout(() => {
-        activateButton(randomPattern())
-    },700);
-}
+// function gameStart2() {
+//     body.style.background = null;
+//     displayText.innerText = "Level " + level;
+//     setTimeout(() => {
+//         activateButton(randomPattern())
+//     },700);
+// }
 
 function gameOver() {
-    console.log(level)
+    endGame = true;
+    displayText.innerText = "Game Over! You Lost (ಥ﹏ಥ) Press Any Key To Play Again";
     wrapper.style.backgroundColor = "red"
     wrongSound.play()
     userInput = []
     numberArray = []
     level = 1;
-    displayText.innerText = "Game Over! You Lost (ಥ﹏ಥ) Press Any Key To Play Again";
-    console.log(numberArray)
+    green.removeEventListener("mousedown", function(){promptUser('green')}, true);  
+    red.removeEventListener("mousedown", function(){promptUser('red')}, true);  
+    yellow.removeEventListener("mousedown", function(){promptUser('yellow')}, true);  
+    blue.removeEventListener("mousedown", function(){promptUser('blue')}, true);  
+    // body.addEventListener("keydown", function() {gameStart2()}, {once : true});
+    element.removeEventListener("mousedown", handleMouseDown, true);  
 }
 
 
