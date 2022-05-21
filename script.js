@@ -24,7 +24,7 @@ let red = document.getElementById("red");
 let yellow = document.getElementById("yellow");
 let blue = document.getElementById("blue");
 
-
+body.addEventListener("keydown", function() {gameStart()}, {once : true});
 
 function generateColor() {
     randNumber = (Math.floor(Math.random() * 4))
@@ -48,9 +48,11 @@ function revertColor(button) {
 function promptUser(button){
     userInput.push(String(button))
     activateButton(String(button));
+    console.log(userInput)
     for (let i = 0; i < userInput.length; i++) {
             if (userInput[i] != numberArray[i]){
-                gameOver()
+                gameOver();
+                break;
             }
     }if (userInput.length == numberArray.length) {
         userInput = []
@@ -102,24 +104,41 @@ function randomPattern() {
     return(String(numberArray.at(-1)))
 }
 
-
-
 function gameStart() {
+        body.style.background = null;
         displayText.innerText = "Level " + level;
-        activateButton(randomPattern());
+        setTimeout(() => {
+            activateButton(randomPattern())
+        },700);
         green.addEventListener("click", function(){promptUser('green')});
         red.addEventListener("click", function(){promptUser('red')});
         yellow.addEventListener("click", function(){promptUser('yellow')});
         blue.addEventListener("click", function(){promptUser('blue')});
 }
 
+function gameStart2() {
+    body.style.background = null;
+    displayText.innerText = "Level " + level;
+    setTimeout(() => {
+        activateButton(randomPattern())
+    },700);
+}
 
-
-function gameOver(){
+function gameOver() {
+    console.log(level)
     wrapper.style.backgroundColor = "red"
     wrongSound.play()
-    displayText.innerText = "Game Over! You Lost ¯\_( ͡❛ ͜ʖ ͡❛)_/¯! Press Any Key To Play Again"
+    userInput = []
+    numberArray = []
+    level = 1;
+    displayText.innerText = "Game Over! You Lost (ಥ﹏ಥ) Press Any Key To Play Again";
+    console.log(numberArray)
 }
+
+
+
+
+
 
     //     
 

@@ -17,15 +17,16 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
 }
 
 .display-msg {
-    width: 100%;
+    width: 100%
 }
 
 .display-msg > h1 {
     font-family: "pixels", Arial, Helvetica, sans-serif;
-    font-size: 4rem;
+    font-size: 3.3rem;
     color: white;
     margin-top: 4%;
     text-align: center;
