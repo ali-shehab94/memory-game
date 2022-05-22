@@ -1,9 +1,19 @@
+//setting variables
+
 let userInput = [];
 let greenSound;
 let redSound;
 let yellowSound;
 let blueSound;
 let wrongSound;
+let endGame = false;
+let btnSound;
+let btnColor;
+let randNumber;
+let numberArray = [];
+let level = 1;
+
+//importing sounds
 
 greenSound = new Audio('sounds/green.mp3');
 redSound = new Audio('sounds/red.mp3');
@@ -11,22 +21,55 @@ yellowSound = new Audio('sounds/yellow.mp3');
 blueSound = new Audio('sounds/blue.mp3');
 wrongSound = new Audio('sounds/wrong.mp3');
 
-let endGame = false;
-let btnSound;
-let btnColor;
-let randNumber;
-let numberArray = [];
-let level = 1;
+//assigning DOM elements to variables
 let wrapper = document.getElementById("body");
 let displayText = document.getElementById("display-msg");
-
 let green = document.getElementById("green")
 let red = document.getElementById("red");
 let yellow = document.getElementById("yellow");
 let blue = document.getElementById("blue");
 
+//keydown at body element will start the game
 body.addEventListener("keydown", function() {gameStart()});
 
+
+function gameStart() {
+    endGame = false;
+    //removes any DOM manipulation from the previous match
+    body.style.background = null;
+    displayText.innerText = "Level " + level;
+    //this function runs the whole operation of creating a random number, storing it's value, and displays changes (flashes)
+    setTimeout(() => {
+        activateButton(randomPattern())
+    },500);
+    //promptUser is the function that analyzes the user input
+    green.onclick = function() {promptUser('green')};  
+    red.onclick = function() {promptUser('red')};  
+    yellow.onclick = function() {promptUser('yellow')};  
+    blue.onclick = function() {promptUser('blue')};
+}
+
+//this function stores user input (button click) into an array, 
+function promptUser(button){
+    userInput.push(String(button));
+    activateButton(String(button));
+    for (let i = 0; i < userInput.length; i++) {
+            if (userInput[i] != numberArray[i]){
+                gameOver();
+            }
+    }if (endGame == false) {
+        if (userInput.length == numberArray.length) {
+            userInput = []
+            level += 1;
+            displayText.innerText = "Level " + level;
+            setTimeout(function (){
+                gameStart()
+            }, 1000);
+        }
+    }
+}
+
+//generates random number from 0 to 3 and saves it is a list
 function generateColor() {
     randNumber = (Math.floor(Math.random() * 4))
     if (randNumber == 0) {
@@ -39,35 +82,18 @@ function generateColor() {
         return numberArray.push("blue")
     }
 }
-// green.onclick = function() {
-    // userInput.push("green");
 
-function revertColor(button) {
-    button.style.background = null;
+//returns the last color in the list. it's return will be placed in activateButton function
+function randomPattern() {
+    generateColor()
+    return(String(numberArray.at(-1)))
 }
 
-function promptUser(button){
-    userInput.push(String(button))
-    activateButton(String(button));
-    console.log(userInput)
-    for (let i = 0; i < userInput.length; i++) {
-            if (userInput[i] != numberArray[i]){
-                gameOver();
-                userInput = []
-            }
-    }if (endGame == false) {
-        if (userInput.length == numberArray.length) {
-            userInput = []
-            level += 1;
-            displayText.innerText = "Level " + level;
-            setTimeout(function (){
-                activateButton(randomPattern())
-            }, 1000);
-        }
-    }
-}
 
+
+//this function displays changes to a button when clicked, and plays it's sound, it takes it's color from the above function
 function activateButton(color) {
+    console.log(numberArray)
     if (color == "green") {
         greenSound.play();
         green.style.background = "white";
@@ -87,31 +113,12 @@ function activateButton(color) {
     }
 }
 
-
-function randomPattern() {
-    generateColor()
-    return(String(numberArray.at(-1)))
+//reverts color to original after being changed by activateButton function
+function revertColor(button) {
+    button.style.background = null;
 }
 
-function gameStart() {
-        body.style.background = null;
-        displayText.innerText = "Level " + level;
-        setTimeout(() => {
-            activateButton(randomPattern())
-        },700);
-        green.addEventListener("click", function(){promptUser('green')});
-        red.addEventListener("click", function(){promptUser('red')});
-        yellow.addEventListener("click", function(){promptUser('yellow')});
-        blue.addEventListener("click", function(){promptUser('blue')});
-}
 
-// function gameStart2() {
-//     body.style.background = null;
-//     displayText.innerText = "Level " + level;
-//     setTimeout(() => {
-//         activateButton(randomPattern())
-//     },700);
-// }
 
 function gameOver() {
     endGame = true;
@@ -121,89 +128,4 @@ function gameOver() {
     userInput = []
     numberArray = []
     level = 1;
-    green.removeEventListener("mousedown", function(){promptUser('green')}, true);  
-    red.removeEventListener("mousedown", function(){promptUser('red')}, true);  
-    yellow.removeEventListener("mousedown", function(){promptUser('yellow')}, true);  
-    blue.removeEventListener("mousedown", function(){promptUser('blue')}, true);  
-    // body.addEventListener("keydown", function() {gameStart2()}, {once : true});
-    element.removeEventListener("mousedown", handleMouseDown, true);  
 }
-
-
-
-
-
-
-    //     
-
-
-
-
-
-
-
-
-    // yellow.onclick = function(){
-    //     yellowSound.play()
-    //     yellow.style.background = "white";
-    //     userInput.push("2")
-    // }
-
-
-
-    // blue.onclick = function(){
-    //     blueSound.play()
-    //     blue.style.background = "white";
-    //     userInput.push("3")
-        
-    // }
-
-
-
-// function numConverter(number) {
-//     if (number == 0){
-//         btnSound = greenSound;
-//         btnColor = green;
-//     }else if (number == 1){
-//         btnSound = redSound;
-//         btnColor = red;
-//     }else if (number == 2){
-//         btnSound = yellowSound;
-//         btnColor = yellow;
-//     }else if (number == 3){
-//         btnSound = blueSound;
-//         btnColor = blue;
-//     }
-// }
-
-
-
-//create a list of 15 random numbers that will determine the color pattern
-
-
-
-
-
-        
-        // for (let i = 0; i < numberArray.length; i++){
-        //     if (numberArray [i] =
-        // }
-        // for (let i in numberArray) {
-        //     if i 
-        // }
-        
-        
-//         
-
-
-
-
-
-
-
-
-// if (randNumber == 0){
-//     green.getElementById("green").click();
-// }else if (randNumber == 1){
-//     green.getElementById("red").click()
-// }
